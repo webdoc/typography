@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="">
+	<meta name="description" content="">
+	
+	<title>Title</title>
+	
+	<script>document.documentElement.className = 'js';</script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<!-- Force latest IE rendering engine & Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<!-- Make IE recognise HTML5 elements for styling -->
+	<!--[if lte IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<!-- Disable image toolbar in IE6 -->
+	<!--[if lte IE 6]><meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+	
+	<!--link rel="icon" type="image/png" href="images/favicon.png" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png"-->
+	
+	<link rel="stylesheet" type="text/css" href="css/template.reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/template.typography.css" />
+	<link rel="stylesheet" type="text/css" href="css/template.forms.css" />
+	<link rel="stylesheet" type="text/css" href="css/template.classes.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="css/template.ie.css" /><![endif]-->
+	<!--[if IE 8]><link rel="stylesheet" type="text/css" href="css/template.ie8.css" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="css/template.ie7.css" /><![endif]-->
+	<!--[if IE 6]><link rel="stylesheet" type="text/css" href="css/template.ie6.css" /><![endif]-->
+	<link rel="stylesheet" type="text/css" href="css/template.typography.12_20.css" />
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Dancing+Script|Ubuntu:b,i,bi|Just+Another+Hand|Chewy|Schoolbell|Merriweather|Puritan:i,b,bi|Cabin:i,b,bi|Tangerine:b|Coda:800|Droid+Serif:b|Droid+Sans:b|Irish+Growler|Lobster|Yanone+Kaffeesatz:200,300,400,700|Neucha|Arvo:i,b,bi" />
+	
+	<style>
+		body {
+			background-image: url('test/images/grid_20px.png');
+		}
+		
+		table {
+			background-color: white;
+		}
+		
+		.mark {
+			display: inline-block;
+			line-height: 0;
+			font-size: 0;
+			vertical-align: baseline;
+			position: relative;
+		}
+		
+		.dot {
+			position: absolute;
+			display: block;
+			width: 10px;
+			height: 10px;
+			background-color: red;
+		}
+		
+		.head {
+			background-color: rgba(63,63,63,0.2);
+		}
+		
+		.pass .lineheight,
+		.pass .height {
+			background-color: rgba(160,255,63,0.4);
+		}
+		
+		.fail .lineheight,
+		.fail .height {
+			background-color: rgba(255,127,0,0.5);
+		}
+		
+		.test {
+			float: left;
+			clear: left;
+			margin-bottom: 0;
+			white-space: nowrap;
+		}
+	</style>
+</head>
+
+<body>
+	
+	<script src="js/js.extensions.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery.js"%3E%3C/script%3E'));</script>
+	<script src="js/jquery.extensions.js"></script>
+	<script src="js/jquery.event.activate.js"></script>
+	<script src="js/jquery.validator.js"></script>
+	<script src="js/jquery.transitions.js"></script>
+	<script src="js/jquery.loading.js"></script>
+	<script src="js/jquery.popup.js"></script>
+	<script src="js/template.ui.js"></script>
+	<script src="js/js.details.js"></script>
+	
+	<script type="text/javascript">
+		(function(){
+			var fonts = [
+			    	"Dancing Script",
+			    	"Ubuntu",
+			    	"Just Another Hand",
+			    	"Chewy",
+			    	"Schoolbell",
+			    	"Merriweather",
+			    	"Puritan",
+			    	"Cabin",
+			    	"Tangerine",
+			    	"Coda",
+			    	"Droid Serif",
+			    	"Droid Sans",
+			    	"Irish Growler",
+			    	"Lobster",
+			    	"Yanone Kaffeesatz",
+			    	"Neucha",
+			    	"Arvo"
+			    ],
+			    
+			    sizes = [
+			    	'9px',
+			    	'12px',
+			    	'15px',
+			    	'18px',
+			    	'21px',
+			    	'24px',
+			    	'27px',
+			    	'30px'
+			    ],
+			    
+			    test = '<p class="test"><span style="font-family: {{font}}; font-size: {{size}}" class="fred">' +
+			    	'The quick brown fox jumps over the lazy dog.<br/>' +
+			    	'The quick brown fox jumps over the lazy dog.<br/>' +
+			    	'The quick brown fox jumps over the lazy dog.<br/>' +
+			    	'The quick brown fox jumps over the lazy dog.<br/>' +
+			    	'The quick brown fox jumps over the lazy dog.<br/>' +
+			    	'</span></p>',
+			    
+			    row = '<tr class="{{class}}"><td>{{font}}</td><td class="height">{{lineheight}}</td><td class="height">{{fredheight}}</td><td class="height">{{height}}</td><td>{{width}}</td></tr>';
+			
+			function setupFont(body, font, size) {
+				var elem = jQuery(jQuery.render(test, {
+					font: font,
+					size: size
+				}));
+				
+				body.append(elem);
+				
+				return {
+					elem: elem
+				};
+			}
+			
+			function setupFonts(body, fonts, size) {
+				var l = fonts.length,
+						result = {},
+						font;
+				
+				while (l--) {
+					font = fonts[l];
+					result[font] = setupFont(body, font, size);
+				}
+				
+				return result;
+			}
+			
+			function checkFont(font, data) {
+				var elem = data.elem;
+				
+				data.font = font;
+				data.lineheight = parseInt(elem.css('line-height'));
+				data.fredheight = parseInt(elem.find('.fred').css('line-height'));
+				data.height = elem.height()/5;
+				data.width = elem.width();
+				data['class'] = (data.fredheight === data.height) ? 'pass' : 'fail';
+			}
+			
+			function checkFonts(fonts, data) {
+				var l = fonts.length,
+				    result = {},
+				    font;
+				
+				while (l--) {
+					font = fonts[l];
+					result[font] = checkFont(font, data[font]);
+				}
+				
+				return result;
+			}
+			
+			function populateResults(table, data, size) {
+				var html = '',
+				    key;
+				
+				html += ['<thead>', jQuery.render(row, {
+					font: size + ' font',
+					lineheight: 'container line-height',
+					fredheight: 'span line-height',
+					height: 'measured line-height',
+					width: 'width',
+					'class': 'head'
+				}), '</thead>'].join('');
+				
+				for (key in data) {
+					html += jQuery.render(row, data[key]);
+				}
+				
+				table.html(html);
+			}
+			
+			jQuery(document).ready(function(){
+				var body = jQuery('body'),
+				    m = sizes.length,
+				    data, table;
+				
+				while (m--) {
+					data = setupFonts(body, fonts, sizes[m]);
+					table = jQuery('<table/>');
+					
+					(function(data, table, size) {
+						setTimeout(function(){
+							checkFonts(fonts, data);
+							populateResults(table, data, size);
+							body.prepend(table);
+						}, 1000);
+					})(jQuery.extend({}, data), table, sizes[m]);
+				}
+			});
+		})();
+	</script>
+</body>
+</html>
