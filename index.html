@@ -85,8 +85,6 @@
 		
 		.note {
 			position: absolute;
-			top: -1.6667em;
-			left: 0;
 		}
 	</style>
 </head>
@@ -235,7 +233,7 @@
 						// Loop over lineheights
 						while (m--) {
 							html += jQuery.render(rowdata, {
-								wrap: 'item <span class="note">'+lineheights[m]+'</span>',
+								wrap: '<span class="note">'+lineheights[m]+'</span><br/>item',
 								span: 'span',
 								average: 'mean',
 								'class': ''
