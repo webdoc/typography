@@ -147,20 +147,21 @@
 			    ],
 			    
 			    lineheights = [
-			    	'1.33333333',
 			    	'1.3333334',
+			    	'1.3333333',
 			    	'1.33334',
+			    	'1.33333',
 			    	'1.34',
 			    	'1.33'
 			    ],
 			    
-			    test = '<p class="test" style="line-height: {{lineheight}};"><span style="font-family: {{font}}; font-size: {{size}};" class="fred">' +
+			    test = '<div class="test" style="line-height: {{lineheight}};"><p><span style="font-family: {{font}}; font-size: {{size}};" class="fred">' +
 			    	'The quick brown fox jumps over the lazy dog.<br/>' +
 			    	'The quick brown fox jumps over the lazy dog.<br/>' +
 			    	'The quick brown fox jumps over the lazy dog.<br/>' +
 			    	'The quick brown fox jumps over the lazy dog.<br/>' +
 			    	'The quick brown fox jumps over the lazy dog.<br/>' +
-			    	'</span></p>',
+			    	'</span></p></div>',
 			    
 			    row = '<tr class="{{class}}"><td>{{font}}</td>{{rowdata}}<td>{{width}}</td></tr>',
 			    
